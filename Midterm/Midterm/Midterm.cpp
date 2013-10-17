@@ -46,6 +46,7 @@ void DrawRectangle() {
 
 float RotateVertices(float angle, float *Vert) { 
 	// Multiply Rotation Matrix of angle by Vertex
+	return 0.0f;
 }
 
 void display(void) {
@@ -64,11 +65,12 @@ void display(void) {
 
 	glFlush ();
 }
+
 void reshape (int w, int h) {
 	glViewport (0, 0, (GLsizei) w, (GLsizei) h);
 	glMatrixMode (GL_PROJECTION);
 	glLoadIdentity ();
-	gluOrtho2D(10, 50, 0, 100); // Left, Right, Top, Bottom
+	gluOrtho2D(-(w/2.0), w/2.0, -(h/2.0), h/2.0);
 	glMatrixMode (GL_MODELVIEW);
 	glLoadIdentity (); /* clear the matrix */
 }
