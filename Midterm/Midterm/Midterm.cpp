@@ -1,3 +1,5 @@
+/* Adam Phung */
+
 #include <Windows.h> // if you use Windows
 #include <glut.h> 
 #include <math.h>
@@ -146,21 +148,21 @@ void display(void) {
 
 		switch(key_Flag) {
 			case 1: // Rotate T1 clockwise for 30 degrees 
-				angleT1 += 30.0;
+				angleT1 = 30.0;
 				RotateVertices(angleT1, T1Vert1);
 				RotateVertices(angleT1, T1Vert2);
 				RotateVertices(angleT1, T1Vert3);
 				key_Flag = 0;
 				break;
 			case 2: // Rotate T2 counter-clockwise for 30 degrees
-				angleT2 -= 30.0;
+				angleT2 = -30.0;
 				RotateVertices(angleT2, T2Vert1);
 				RotateVertices(angleT2, T2Vert2);
 				RotateVertices(angleT2, T2Vert3);
 				key_Flag = 0;
 				break;
 			case 3: // Rotate rectangle clockwise for 45 degrees
-				angleR -= 40.0;
+				angleR = 45.0;
 				RotateVertices(angleR, R1Vert1);
 				RotateVertices(angleR, R1Vert2);
 				RotateVertices(angleR, R1Vert3);
