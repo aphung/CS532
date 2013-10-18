@@ -1,6 +1,7 @@
 #include <Windows.h> // if you use Windows
 #include <glut.h> 
 #include <math.h>
+#include <iostream>
 
 // Vertices of Given Objects
 float T1Vert1[] = {0.0f, 0.0f}; float T1Vert2[] = {50.0f, 0.0f}; float T1Vert3[] = {0.0f, 50.0f}; // Triangle 1 Vertices
@@ -21,7 +22,9 @@ bool Move = true; // Whether or not we are moving up or down
 
 int key_Flag=0; // to be used with the interactive controlls
 float PI=3.1416; // to be used with the rotation of vertices
-float angle;  // to be used with the rotation of vertices
+float angleR = 0.0;  // to be used with the rotation of vertices
+float angleT1 = 0.0;
+float angleT2 = 0.0;
 
 double a, b, c, d;
 
@@ -30,28 +33,35 @@ float triangle1Angle = 0.0f;
  *	keyControl()																		|
  *-------------------------------------------------------------------------------------*/
 void keyControl (void) {  
-	if (keyStates['q'] || keySpecialStates[GLUT_KEY_DOWN]) { // If 'd' has been pressed move down
+	if (keyStates['q']) { // If 'd' has been pressed move down
 		if (Move) {  
 			// Rotate Triange 1 CLOCKWISE
 			key_Flag = 1;
+			std::cout << key_Flag << "- q Pressed!\n";
 		}
 	}
-	if (keyStates['w'] || keySpecialStates[GLUT_KEY_DOWN]) { // If 'd' has been pressed move down
+	if (keyStates['w']) { // If 'd' has been pressed move down
 		if (Move) {  
 			// Rotate Triange 2 COUNTER-CLOCKWISE
 			key_Flag = 2;
+			std::cout << key_Flag << "- w Pressed!\n";
 		}
 	} 
-	if (keyStates['e'] || keySpecialStates[GLUT_KEY_DOWN]) { // If 'd' has been pressed move down
+	if (keyStates['e']) { // If 'd' has been pressed move down
 		if (Move) {  
 			// Rotate Rectangle CLOCKWISE
 			key_Flag = 3;
+			std::cout << key_Flag << "- e Pressed!\n";
 		}
 	}
 } 
 
 void init(void) {
 	glClearColor (0.2f, 0.2f, 0.2f, 1.0f);
+}
+
+void idle() {
+	glutPostRedisplay(); // If Re-display needed (FOR MOTION)
 }
 
 void Draw_Axes(void) {
@@ -95,9 +105,10 @@ void DrawRectangle(float p1[], float p2[], float p3[], float p4[], float color[]
 	glDisable(GL_BLEND);
 }
 
-float RotateVertices(float angle, float *Vert) { 
+void RotateVertices(float angle, float *Vert) { 
 	// Multiply Rotation Matrix of angle by Vertex
-	return 0.0f;
+	Vert[0] = cos(angle) * Vert[0] + -sin(angle) * Vert[1];
+	Vert[1] = sin(angle) * Vert[0] + cos(angle) * Vert[1];
 }
 
 /*--------------------------------------------------------------------------------------
@@ -124,61 +135,45 @@ void keySpecialUp(int key, int x, int y) {
 void display(void) {
 	keyControl(); // Check if a key was pressed
 	glClear (GL_COLOR_BUFFER_BIT);
+				
+	if (Move) {
+		Draw_Axes(); // Draw Axes
 
-	Draw_Axes(); // Draw Axes
+		switch(key_Flag) {
+			case 1: // Rotate T1 clockwise for 30 degrees 
+				angleT1 += 0.03;
+				RotateVertices(angleT1, T1Vert1);
+				RotateVertices(angleT1, T1Vert2);
+				RotateVertices(angleT1, T1Vert3);
+				key_Flag = 0;
+				break;
+			case 2: // Rotate T2 counter-clockwise for 30 degrees
+				angleT2 -= 0.03;
+				RotateVertices(angleT2, T2Vert1);
+				RotateVertices(angleT2, T2Vert2);
+				RotateVertices(angleT2, T2Vert3);
+				key_Flag = 0;
+				break;
+			case 3: // Rotate rectangle clockwise for 45 degrees
+				angleR -= 0.045;
+				RotateVertices(angleR, R1Vert1);
+				RotateVertices(angleR, R1Vert2);
+				RotateVertices(angleR, R1Vert3);
+				RotateVertices(angleR, R1Vert4);
+				key_Flag = 0;
+				break;
+			default:
+				key_Flag = 0;
+				break;
+		}
 
-	// Set rectangle and triangle as array
-	float rectangleX [4] = { R1Vert1[0], R1Vert2[0], R1Vert4[0], R1Vert3[0] };
-	float rectangleY [4] = { R1Vert1[1], R1Vert2[1], R1Vert4[1], R1Vert3[1] };
-	float triangle1X [3] = { T1Vert1[0], T1Vert2[0], T1Vert3[0] };
-	float triangle1Y [3] = { T1Vert1[1], T1Vert2[1], T1Vert3[1] };
-	float triangle2X [3] = { T2Vert1[0], T2Vert2[0], T2Vert3[0] };
-	float triangle2Y [3] = { T2Vert1[1], T2Vert2[1], T2Vert3[1] };
+		DrawRectangle(R1Vert1, R1Vert2, R1Vert4, R1Vert3, ColorYellow); // Draw Rectangle
+		DrawTriangle(T1Vert1, T1Vert2, T1Vert3, ColorOrange); // Draw Triangle 1
+		DrawTriangle(T2Vert1, T2Vert2, T2Vert3, ColorBlue); // Draw Triangle 2
 
-	// Transformation Arrays
-	float dRectangleX [4] = { 0, 0, 0, 0 };
-	float dRectangleY [4] = { 0, 0, 0, 0 };
-
-	float dTriangle1X [3] = { 0, 0, 0 };
-	float dTriangle1Y [3] = { 0, 0, 0 };
-
-	float dTriangle2X [3] = { 0, 0, 0 };
-	float dTriangle2Y [3] = { 0, 0, 0 };
-
-	// if (key_Flag==3) Rotate rectangle clockwise for 45 degrees
-	// if (key_Flag==1) Rotate T1 clockwise for 30 degrees
-	// if (key_Flag==2) Rotate T2 counter-clockwise for 30 degrees
-	switch(key_Flag) {
-		case 1: // Rotate T1 clockwise for 30 degrees
-			triangle1Angle -= 30.0;
-			a = cos(triangle1Angle);
-			b = -sin(triangle1Angle);
-			c = sin(triangle1Angle);
-			d = cos(triangle1Angle);
-			for (int i = 0; i < 3; i++) {
-				dTriangle1X[i] = a*triangle1X[i]+b*triangle1Y[i];
-				dTriangle1Y[i] = c*dTriangle1X[i]+d*dTriangle1Y[i];
-			}
-			break;
-		case 2:
-			break;
-		case 3:
-			break;
-		default:
-			break;
+		glFlush ();
+		Move = false;
 	}
-
-
-	DrawRectangle(R1Vert1, R1Vert2, R1Vert4, R1Vert3, ColorYellow); // Draw Rectangle
-
-	float p1[] = { dTriangle1X[0], dTriangle1Y[0] };
-	float p2[] = { dTriangle1X[1], dTriangle1Y[1] };
-	float p3[] = { dTriangle1X[2], dTriangle1Y[2] };
-	DrawTriangle(p1, p2, p3, ColorOrange); // Draw Triangle 1
-
-	DrawTriangle(T2Vert1, T2Vert2, T2Vert3, ColorBlue); // Draw Triangle 2
-
-	glFlush ();
 }
 
 void reshape (int w, int h) {
@@ -191,13 +186,21 @@ void reshape (int w, int h) {
 }
 
 int main(int argc, char** argv) {
+	for (int i = 0; i < 256; i++) {
+		keyStates[i] = false; // Set the array of boolean values to False
+		keySpecialStates[i] = false; // Set the array of boolean values to False
+	}
+
 	glutInit(&argc, argv);
 	glutInitDisplayMode (GLUT_SINGLE | GLUT_RGB);
 	glutInitWindowSize (600, 600);
 	glutInitWindowPosition (100, 100);
+	glutInitDisplayMode(GLUT_SINGLE); // Set up a basic display buffer (only single buffered for now) 
 	glutCreateWindow ("Midterm Project");
-	init ();
+	init();
 	glutDisplayFunc(display);
+
+	glutIdleFunc(idle); // Tell GLUT to use the method "display" as our idle method as well  
 
 	glutKeyboardFunc(keyPressed); // Tell GLUT to use the method "keyPressed" for key presses  
 	glutKeyboardUpFunc(keyUp); // Tell GLUT to use the method "keyUp" for key up events  
