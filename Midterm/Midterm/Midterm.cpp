@@ -106,9 +106,14 @@ void DrawRectangle(float p1[], float p2[], float p3[], float p4[], float color[]
 }
 
 void RotateVertices(float angle, float *Vert) { 
+	float dX = Vert[0];
+	float dY = Vert[1];
+	
+	angle = angle * (PI/180.0);
+
 	// Multiply Rotation Matrix of angle by Vertex
-	Vert[0] = cos(angle) * Vert[0] + -sin(angle) * Vert[1];
-	Vert[1] = sin(angle) * Vert[0] + cos(angle) * Vert[1];
+	Vert[0] = cos(angle) * dX + -sin(angle) * dY;
+	Vert[1] = sin(angle) * dX + cos(angle) * dY;
 }
 
 /*--------------------------------------------------------------------------------------
@@ -141,21 +146,21 @@ void display(void) {
 
 		switch(key_Flag) {
 			case 1: // Rotate T1 clockwise for 30 degrees 
-				angleT1 += 0.03;
+				angleT1 += 30.0;
 				RotateVertices(angleT1, T1Vert1);
 				RotateVertices(angleT1, T1Vert2);
 				RotateVertices(angleT1, T1Vert3);
 				key_Flag = 0;
 				break;
 			case 2: // Rotate T2 counter-clockwise for 30 degrees
-				angleT2 -= 0.03;
+				angleT2 -= 30.0;
 				RotateVertices(angleT2, T2Vert1);
 				RotateVertices(angleT2, T2Vert2);
 				RotateVertices(angleT2, T2Vert3);
 				key_Flag = 0;
 				break;
 			case 3: // Rotate rectangle clockwise for 45 degrees
-				angleR -= 0.045;
+				angleR -= 40.0;
 				RotateVertices(angleR, R1Vert1);
 				RotateVertices(angleR, R1Vert2);
 				RotateVertices(angleR, R1Vert3);
