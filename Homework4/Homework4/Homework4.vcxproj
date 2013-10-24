@@ -11,7 +11,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Serpinski Triangle.cpp" />
+    <ClCompile Include="Fern.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{C3E6C7E2-4F3C-4A44-947B-CD75239FDA9E}</ProjectGuid>

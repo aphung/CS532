@@ -15,7 +15,7 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Serpinski Triangle.cpp">
+    <ClCompile Include="Fern.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

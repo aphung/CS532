@@ -48,7 +48,12 @@ void drawSerpinski(int n) {
 			break;
 		}
 
-		setPixel(200*x, 200*y); // call plot pixel function
+		int dX = x * 200;
+		int dY = y * 200;
+
+		if (dX%2 != 0)
+			setPixel(dX, dY); // call plot pixel function
+
 		x_old=x; y_old=y;
 	}
 }
