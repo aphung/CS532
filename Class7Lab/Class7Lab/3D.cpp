@@ -38,15 +38,18 @@ void display(void) {
 	glClear (GL_COLOR_BUFFER_BIT);
 	
 	glLoadIdentity(); // Load the Identity Matrix to reset our drawing locations  
+	//gluLookAt(0, 0, -20, 0, 0, -1, 0, 1, 0);
+	//glTranslatef(0.0f, 0.0f, -2.5f);
 	glColor3f(0.5f, 0.7f, 1.0f); // Line color
 
+	// Look
+	gluLookAt(10, 6, 15, 0, 0, 0, 0, 1, 0);
 	
 	// Enter the primitive code here
+	glutWireCube(1.5f);
 
 	Draw_Axes (); // Draw xyz
 	glFlush(); // Flush the OpenGL buffers to the window  
-
-
 }
 
 
@@ -55,12 +58,16 @@ void display(void) {
  *-------------------------------------------------------------------------------------*/
 void reshape(int width, int height) {
 	// Set up orthographic projection such that each point corresponds to a pixel. 
-	glViewport(0, 0, (GLsizei)width, (GLsizei)height); // x,y,cWinW,cWinH - Set our viewport to the size of our window   
+	glViewport(0, 0, (GLsizei)width, (GLsizei)height); // x,y,cWinW,cWinH - Set our viewport to the size of our window  
+
 	glMatrixMode(GL_PROJECTION); // Switch to the projection matrix so that we can manipulate how our scene is viewed  
 	glLoadIdentity(); // Reset the projection matrix to the identity matrix so that we don't get any artifacts (cleaning up)
-
-	glOrtho(-2.0,2.0,-2.0,2.0,-2.0,2.0); // left, right, bottom, top, nearVal, farVal
+	//glOrtho(-2.0,2.0,-2.0,2.0,-2.0,2.0); // left, right, bottom, top, nearVal, farVal
+	gluPerspective(20.0, (GLfloat)width / (GLfloat)height, 1.0, 100.0);
 	glMatrixMode(GL_MODELVIEW); // Switch back to the model view matrix, so that we can start drawing shapes correctly  
+	
+	//glFrustum(-1.0, 1.0, -1.0, 2.0, 1.5, 20.0);
+	//glFrustum(-2.0, 2.0, -2.0, 2.0, 1.5, 20.0);	
 }
 
 
