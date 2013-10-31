@@ -29,7 +29,7 @@ for x=xa-Delta*n/2:Delta:xa+Delta*n/2
     xc=xc+1;
 end
 
-figure; image(Im); axis image
+figure; image(Im)% axis image
 % set(gca,'XTick',[1,333,666,1000])
 % set(gca,'XTickLabel',{'-2','-1','0','1'})
 % set(gca,'YTick',[1,333,666,1000])
