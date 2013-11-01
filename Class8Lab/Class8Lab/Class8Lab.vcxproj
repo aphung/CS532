@@ -11,7 +11,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="3D Transformations.cpp" />
+    <ClCompile Include="DisplyList.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{1475E5A2-231B-422C-A14D-B09F2A702F24}</ProjectGuid>

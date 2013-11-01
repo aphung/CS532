@@ -6,7 +6,7 @@
 GLuint theTorus;
 
 /* Draw Display List Object */
-static void Object(int numU, int numV, float r) {
+static void Object(int numU, int numV, float r, int R) {
 	int i, j, k;
 	double s, t, x, y, z, twopi, V, U;
 	double pi = 3.14; 
@@ -26,6 +26,9 @@ static void Object(int numU, int numV, float r) {
 				//x = ; // Object Parametric Coordinates 
 				//y = ;
 				//z = ;
+				x = (R + r * cos(V)) * cos(U);
+				y = (R + r * cos(V)) * sin(U);;
+				z = r * sin(V);
 
 				glVertex3f(x, y, z);
 			}
@@ -38,7 +41,7 @@ static void init(void) {
 	theTorus = glGenLists (1); //creates a display list
 	glNewList(theTorus, GL_COMPILE); // Define the display list
 
-	Object(20, 50, 1); // 0) Draw Object 
+	Object(20, 50, 1, 10); // 0) Draw Object 
 
 	glEndList();  // Define the display list (End)
 	glShadeModel(GL_SMOOTH );
