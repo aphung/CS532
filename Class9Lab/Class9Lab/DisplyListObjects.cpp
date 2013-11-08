@@ -5,7 +5,7 @@
 
 
 float PI=3.1415926535897932384626433832795; // 
-
+float ZOOM = 30;
 GLuint theObject;
 
 /* Draw Display List Object */
@@ -25,10 +25,29 @@ static void Object(int numU, int numV, float r, int R) {
 				U=t*twopi/numV; // Theta
 				
 				//// Object Parametric Coordinates Here
-				// Insert Parametric x(U,V) 
+				// Insert Parametric x(U,V)
 				// Insert Parametric y(U,V)
 				// Insert Parametric z(U,V)
 
+				// Sphere
+				//x = R * sin(V) * cos(U);
+				//y = R * sin(V) * sin(U);
+				//z = R * cos(V);
+
+				// Cylinder
+				//x = r * cos(V);
+				//y = r * sin(V);
+				//z = U;
+
+				// Torus
+				//x = (R + r * cos(U)) * cos(V);
+				//y = (R + r * cos(U)) * sin(V);
+				//z = r * sin(U);
+
+				// Double Funnel
+				x = R * pow(cos(U), 3) * pow(cos(V), 2);
+				y = R * pow(cos(U), 3) * pow(sin(V-1), 2);
+				z = R * pow(sin(U), 2);
 
 
 				glVertex3f(x, y, z);
@@ -43,18 +62,17 @@ static void init(void) {
 	glNewList(theObject, GL_COMPILE); // Define the display list
 
 	// Draw Display List Objects 
-	Object(0.0, 0.0, 0.0, 0.0); // Draw display list Objec
+	Object(50.0, 50.0, 9.0, 9.0); // Draw display list Objec
 
 	glEndList();  // Define the display list (End)
 
-	glShadeModel(GL_SMOOTH );
-
+	glShadeModel(GL_SMOOTH);
 	glClearColor(0.0, 0.0, 0.0, 0.0);
 }
 void display(void) {
 	glClear(GL_COLOR_BUFFER_BIT); // Clear the window 
 	glColor3f (0.5f, 0.7f, 1.0f);  // Draw color
-	glCallList(theTorus); // Execute the commands in the display list
+	glCallList(theObject); // Execute the commands in the display list
 	glFlush();
 }
 void reshape(int w, int h) {
@@ -65,7 +83,7 @@ void reshape(int w, int h) {
 	//glFrustum (-40.0, 40.0, -40.0, 40.0, -20.0, 20.0);
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
-	gluLookAt(0, 0, 30, 0, 0, 0, 0, 1, 0);
+	gluLookAt(0, 0, ZOOM, 0, 0, 0, 0, 1, 0);
 }
 
 /* Rotate about x-axis when "x" typed; rotate about y-axis when "y" typed; "i" returns object to original view */
@@ -73,13 +91,44 @@ void keyboard(unsigned char key, int x, int y) {
 	switch (key) {
 	case 'x':
 	case 'X':
-		glRotatef(15.,1.0,0.0,0.0);
+		glRotatef(15.0,1.0,0.0,0.0);
 		glutPostRedisplay();
 		break;
 		// Insert Rotation along y & z axis here
+	case 'y':
+	case 'Y':
+		glRotatef(15.0, 0.0, 1.0, 0.0);
+		glutPostRedisplay();
+		break;
+	case 'z':
+	case 'Z':
+		glRotatef(15.0, 0.0, 0.0, 1.0);
+		glutPostRedisplay();
+		break;
+	// Insert zoom in/out code here
+	case '_':
+	case '-':
+		ZOOM -= 1;
+		glLoadIdentity();
+		gluLookAt(0, 0, ZOOM, 0, 0, 0, 0, 1, 0);
+		glutPostRedisplay();
+		break;
+	case '=':
+	case '+':
+		ZOOM += 1;
+		glLoadIdentity();
+		gluLookAt(0, 0, ZOOM, 0, 0, 0, 0, 1, 0);
+		glutPostRedisplay();
+		break;
 
-		// Insert zoom in/out code here
-
+	// Return to Normal
+	case 'i':
+	case 'I':
+		glLoadIdentity();
+		ZOOM = 30;
+		gluLookAt(0, 0, 30, 0, 0, 0, 0, 1, 0);
+		glutPostRedisplay();
+		break;
 	case 27:
 		exit(0);
 		break;
