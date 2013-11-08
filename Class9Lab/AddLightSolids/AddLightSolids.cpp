@@ -133,21 +133,21 @@ int main(int argc, char **argv) {
 	glShadeModel (GL_SMOOTH);
 
 	// Light
-	//glEnable(GL_LIGHTING); // 2) enable Phong lighting calculation
-	//glEnable(GL_LIGHT0); // 2) up to eight point sources ( radiating in all directions )
-	//glEnable(GL_DEPTH_TEST); // 2) Depth Perception
+	glEnable(GL_LIGHTING); // 2) enable Phong lighting calculation
+	glEnable(GL_LIGHT0); // 2) up to eight point sources ( radiating in all directions )
+	glEnable(GL_DEPTH_TEST); // 2) Depth Perception
 	
 	// Position light
-	//glLightfv(GL_LIGHT0, GL_POSITION, light_position); // 2) set light position
+	glLightfv(GL_LIGHT0, GL_POSITION, light_position); // 2) set light position
 
-	//glEnable(GL_COLOR_MATERIAL); // 3) enable color driven materials
+	glEnable(GL_COLOR_MATERIAL); // 3) enable color driven materials
 	
-	//glLightfv(GL_LIGHT0, GL_DIFFUSE, light ); // 4) diffuse
-	//glLightfv(GL_LIGHT0, GL_SPECULAR, light ); // 4) specular
-	//glLightModelfv(GL_LIGHT_MODEL_AMBIENT, lmodel_ambient); // 4) ambient
+	glLightfv(GL_LIGHT0, GL_DIFFUSE, light ); // 4) diffuse
+	glLightfv(GL_LIGHT0, GL_SPECULAR, light ); // 4) specular
+	glLightModelfv(GL_LIGHT_MODEL_AMBIENT, lmodel_ambient); // 4) ambient
 	
-	//glMaterialfv(GL_FRONT, GL_SPECULAR, mat_specular); // 5) set material properties 
-	//glMaterialfv(GL_FRONT, GL_SHININESS, mat_shininess); // 5) set material properties
+	glMaterialfv(GL_FRONT, GL_SPECULAR, mat_specular); // 5) set material properties 
+	glMaterialfv(GL_FRONT, GL_SHININESS, mat_shininess); // 5) set material properties
 	
 	glClearColor (0.0, 0.0, 0.0, 0.0);
 	
