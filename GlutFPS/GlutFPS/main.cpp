@@ -1,5 +1,6 @@
 /*
 FPS control demo in GLUT by Nghia Ho
+http://nghiaho.com/?p=1613
 
 SPACEBAR - toggle FPS control
 W,A,S,D - to move
