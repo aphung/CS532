@@ -9,7 +9,7 @@ void Camera::Init()
 	m_yaw = 0.0;
 	m_pitch = 0.0;
 
-	SetPos(0, 0, 0);
+	SetPos(0, 1, 0);
 }
 
 void Camera::Refresh()
@@ -60,7 +60,7 @@ void Camera::Move(float incr)
     float lz = sin(m_yaw)*cos(m_pitch);
 
 	m_x = m_x + incr*lx;
-	m_y = m_y + incr*ly;
+	//m_y = m_y + incr*ly; // stay on the same plane
 	m_z = m_z + incr*lz;
 
 	Refresh();

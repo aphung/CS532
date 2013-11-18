@@ -101,6 +101,11 @@ void Display (void) {
     glutWireTeapot(0.5);
     Grid();
 
+	glBegin(GL_LINES);
+	glVertex3f(5.0, 1.0, 5.0);
+	glutWireTeapot(0.5);
+	glEnd();
+
     glutSwapBuffers(); //swap the buffers
 }
 
